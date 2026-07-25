@@ -1,0 +1,332 @@
+aid: brown-brown
+name: Brown & Brown
+review:
+  question: Does Brown & Brown expose a public, self-serve developer portal or documented API?
+  answer: false
+  date: '2026-07-25'
+  reviewer: API Evangelist
+  homeMarket: United States
+  tier: broker-intermediary
+  gated: true
+findings:
+  summary: |
+    Brown & Brown, Inc. (NYSE: BRO) is a US retail and specialty insurance
+    brokerage — a distributor, not a carrier — and it publishes no public API
+    surface of any kind. There is no developer portal, no API reference, no
+    downloadable OpenAPI/Swagger, no public Postman workspace, no GraphQL
+    endpoint, no published .proto, and no event/webhook catalog on any
+    first-party Brown & Brown property.
+
+    The four canonical developer hostnames do not exist in DNS at all:
+    developer.bbrown.com, developers.bbrown.com, docs.bbrown.com and
+    api.bbrown.com all fail to resolve (NXDOMAIN — no A record). Every
+    developer-shaped path on the marketing site returns 404: /developers, /api,
+    /developer, /partners and /integrations, on both bbrown.com and
+    us.bbrown.com. The corporate site is a WordPress install on WP Engine behind
+    Cloudflare with region-partitioned content (bbrown.com/us/, bbrown.com/uk/,
+    bbrown.com/ie/); its WordPress REST API is not publicly reachable
+    (/wp-json/wp/v2/posts returns 404) and there is no RSS feed exposed for the
+    /blog/ section.
+
+    A subdomain enumeration of bbrown.com surfaced roughly 35 hosts, and every
+    application host is a login wall rather than a developer surface —
+    ratings.bbrown.com redirects to Microsoft Entra ID (login.microsoftonline.com,
+    tenant f1289cc5-8456-4f28-8eab-700d1300fc5d) via an OIDC authorization-code
+    flow, accidentclaims.bbrown.com is a third-party (ABL Group) claimant login,
+    cyberapp.bbrown.com is a rebadged Centraleyes GRC tenant, and bbwrite.bbrown.com
+    and legalentity.bbrown.com are Cloudflare-challenged. None of these is a
+    developer portal under any reading; none carries reference documentation.
+
+    The only genuine programmatic surface anywhere in the group is partner-gated
+    and belongs to a subsidiary. Arrowhead Programs — part of Brown & Brown's
+    Specialty Distribution segment, now branded within Arrowhead Intermediaries
+    alongside Bridge Specialty Group and One80 Intermediaries — describes a
+    "strategic API team" and an Enterprise API (EAPI) layered over the Arrowhead
+    Exchange agent platform. It is a QUOTE integration: an agent-facing rating
+    call distributed through comparative raters and aggregators (CoverHound,
+    Tarmika, Semsee, and DAIS), delivered by commercial agreement with each
+    distributor. It is not consumer-facing, not self-serve, and has no public
+    documentation, no published base URL, and no specification. arrowheadexchange.com
+    serves a login-gated Angular single-page application; api.arrowheadexchange.com
+    resolves through Cloudflare but returns HTTP 404 for the root and for every
+    probed spec path (/openapi.json, /openapi.yaml, /swagger.json,
+    /swagger/v1/swagger.json, /v1/openapi.json, /api-docs, /docs, /spec, /redoc,
+    /swagger, /health, /.well-known/openid-configuration). A gateway host exists;
+    nothing public is served from it.
+
+    ACORD posture: no reference to ACORD, AL3, ACORD XML, ACORD certification or
+    NGDS appears on any Brown & Brown first-party web property, and none appears
+    in the Arrowhead API material. The company's actual carrier data exchange
+    runs where it runs for essentially all US retail brokerage — through the
+    agency management system layer. Brown & Brown is a publicly referenced
+    Vertafore AMS360 agency (Vertafore, May 2025, credited Brown & Brown with
+    building centralized service centers on AMS360 and with helping shape the
+    product), and AMS360-class systems carry carrier policy download over IVANS
+    in ACORD AL3 / ACORD XML. That plumbing belongs to the AMS vendor and the
+    carriers, not to an interface Brown & Brown publishes. Recorded honestly:
+    no ACORD reference published by the company itself.
+
+    Of the four insurance API verbs — quote, bind, issue, FNOL — only QUOTE is
+    exposed programmatically, and only partner-to-partner through the Arrowhead
+    EAPI. Bind, issue and FNOL are not exposed via any documented API; claims
+    intake runs through gated portals and through the carriers on whose paper the
+    risk sits. This is the expected shape for a US broker-intermediary: with no
+    federal regulator and no open-insurance mandate, nothing forces publication,
+    and the distributor's integration value is captured by the agency management
+    system and the aggregator layer rather than by a broker-published API.
+  developerPortal:
+    exists: false
+    url: ''
+    confirmed: false
+    classification: none
+    note: |
+      No portal of any classification was found — not a self-serve developer
+      portal, not a documented partner developer portal. The nearest analogues
+      are agent/client application login walls with no reference documentation.
+  probes:
+  - url: https://bbrown.com/
+    status: 301
+    note: Redirects to https://us.bbrown.com/ (Cloudflare / WP Engine).
+  - url: https://us.bbrown.com/
+    status: 200
+    note: US corporate marketing site. No API, developer, integrations or partner navigation.
+  - url: https://developer.bbrown.com/
+    status: 000
+    note: DNS does not resolve (no A record).
+  - url: https://developers.bbrown.com/
+    status: 000
+    note: DNS does not resolve (no A record).
+  - url: https://docs.bbrown.com/
+    status: 000
+    note: DNS does not resolve (no A record).
+  - url: https://api.bbrown.com/
+    status: 000
+    note: DNS does not resolve (no A record).
+  - url: https://apis.bbrown.com/
+    status: 000
+    note: DNS does not resolve (no A record).
+  - url: https://portal.bbrown.com/
+    status: 000
+    note: DNS does not resolve (no A record).
+  - url: https://us.bbrown.com/developers
+    status: 404
+  - url: https://us.bbrown.com/developer
+    status: 404
+  - url: https://us.bbrown.com/api
+    status: 404
+  - url: https://us.bbrown.com/partners
+    status: 404
+  - url: https://us.bbrown.com/integrations
+    status: 404
+  - url: https://bbrown.com/developers
+    status: 404
+    note: WP Engine 404; response headers leak x-tec-api-root https://bbrown.com/uk/wp-json/tribe/events/v1/ (The Events Calendar plugin), not a business API.
+  - url: https://bbrown.com/.well-known/security.txt
+    status: 404
+  - url: https://bbrown.com/.well-known/openid-configuration
+    status: 404
+  - url: https://bbrown.com/.well-known/oauth-authorization-server
+    status: 404
+  - url: https://us.bbrown.com/wp-json/wp/v2/posts
+    status: 404
+    note: WordPress REST API not publicly exposed.
+  - url: https://ratings.bbrown.com/
+    status: 200
+    note: Redirects to login.microsoftonline.com OIDC authorize (Entra ID tenant f1289cc5-8456-4f28-8eab-700d1300fc5d). Login wall.
+  - url: https://accidentclaims.bbrown.com/
+    status: 200
+    note: '"Login | ABL Group" — third-party claimant login wall.'
+  - url: https://cyberapp.bbrown.com/
+    status: 200
+    note: Centraleyes GRC tenant. Login wall, not a developer surface.
+  - url: https://bbwrite.bbrown.com/
+    status: 403
+    note: Cloudflare challenge. Agent-facing application, not documentation.
+  - url: https://legalentity.bbrown.com/
+    status: 403
+    note: Cloudflare challenge.
+  - url: https://investor.bbrown.com/
+    status: 200
+    note: Investor relations. No technology or API disclosure.
+  - url: https://www.arrowheadexchange.com/
+    status: 200
+    note: Login-gated Angular SPA for the Arrowhead Exchange agent platform (subsidiary). No public docs.
+  - url: https://api.arrowheadexchange.com/
+    status: 404
+    note: Host resolves behind Cloudflare but returns 404 at root.
+  - url: https://api.arrowheadexchange.com/openapi.json
+    status: 404
+  - url: https://api.arrowheadexchange.com/openapi.yaml
+    status: 404
+  - url: https://api.arrowheadexchange.com/swagger.json
+    status: 404
+  - url: https://api.arrowheadexchange.com/swagger/v1/swagger.json
+    status: 404
+  - url: https://api.arrowheadexchange.com/v1/openapi.json
+    status: 404
+  - url: https://api.arrowheadexchange.com/api-docs
+    status: 404
+  - url: https://api.arrowheadexchange.com/docs
+    status: 404
+  - url: https://api.arrowheadexchange.com/spec
+    status: 404
+  - url: https://api.arrowheadexchange.com/redoc
+    status: 404
+  - url: https://api.arrowheadexchange.com/swagger
+    status: 404
+  - url: https://api.arrowheadexchange.com/.well-known/openid-configuration
+    status: 404
+  - url: https://developer.arrowheadgrp.com/
+    status: 000
+    note: DNS does not resolve.
+  - url: https://api.arrowheadgrp.com/
+    status: 000
+    note: DNS does not resolve.
+  - url: https://developer.arrowheadprograms.com/
+    status: 000
+    note: DNS does not resolve.
+  - url: https://arrowheadprograms.com/how-our-strategic-api-team-is-broadening-our-market-reach/
+    status: 200
+    note: 200 when fetched with a browser client; 403 to a plain curl client (Cloudflare bot management). First-party subsidiary article describing the Enterprise API (EAPI) quoting integration.
+  specs:
+    openapiHarvested: false
+    count: 0
+    note: |
+      No OpenAPI, Swagger, AsyncAPI, GraphQL SDL or .proto artifact was found on
+      any Brown & Brown or Arrowhead property. Every candidate spec path probed
+      on the one live API host (api.arrowheadexchange.com) returned 404. The
+      openapi/ directory is deliberately absent from this repo — there is
+      nothing real to save.
+  acordPosture:
+    phrase: No ACORD reference published; exchange runs via Vertafore AMS360 / IVANS agency download
+    acordNamed: false
+    al3: false
+    acordXML: false
+    ngds: false
+    ivans: indirect
+    agencyManagementSystem: Vertafore AMS360
+    note: |
+      Searched Brown & Brown first-party properties and the Arrowhead subsidiary
+      material for ACORD, AL3, ACORD XML, ACORD certified, NGDS, IVANS, agency
+      download, Applied Epic and Vertafore. Nothing published by the company
+      names ACORD. The one confirmed AMS fact is external and vendor-published:
+      Vertafore (May 14, 2025) publicly credited Brown & Brown with building
+      centralized service centers on AMS360 and with helping shape the product.
+      IVANS/ACORD AL3 download is a property of that AMS tier, not of a
+      Brown & Brown interface, and is recorded here as indirect.
+  insuranceVerbs:
+    quote:
+      exposed: true
+      audience: partner-only
+      note: Arrowhead Programs Enterprise API (EAPI) over the Arrowhead Exchange platform, consumed by comparative raters and aggregators (CoverHound, Tarmika, Semsee, DAIS). No public docs, base URL or spec.
+    bind:
+      exposed: false
+      note: Not documented on any public surface.
+    issue:
+      exposed: false
+      note: Not documented on any public surface.
+    fnol:
+      exposed: false
+      note: No public FNOL API. Claims intake is via gated portals (e.g. accidentclaims.bbrown.com) and via the carriers on whose paper the risk sits.
+  authModel:
+    publicApiAuth: none
+    note: |
+      No public API means no published authentication scheme. Observed portal
+      authentication is OIDC/SAML federation to Microsoft Entra ID for internal
+      and teammate-facing applications (ratings.bbrown.com authorization-code
+      flow against login.microsoftonline.com), plus separate third-party vendor
+      logins for claims and GRC applications. No anonymous
+      /.well-known/openid-configuration or /.well-known/oauth-authorization-server
+      document is served on bbrown.com or api.arrowheadexchange.com. Arrowhead
+      EAPI credentialing is not disclosed publicly.
+  webhooks:
+    exists: false
+    asyncapi: false
+    note: No event catalog, webhook documentation or AsyncAPI artifact found. Absence is the finding.
+  postman:
+    publicWorkspace: false
+    note: Postman public search returned no Brown & Brown, Arrowhead, Bridge Specialty or One80 workspace or collection.
+  graphql:
+    exists: false
+    note: No /graphql surface found on bbrown.com, us.bbrown.com or arrowheadexchange.com.
+  grpc:
+    exists: false
+    note: No published .proto.
+  sdks:
+    exists: false
+    note: |
+      No first-party SDKs. github.com/brown-and-brown exists but is an
+      unattributed org (no name, description, blog or location set, 3 repos) and
+      could not be verified as belonging to Brown & Brown, Inc.; it is
+      deliberately not recorded in apis.yml.
+  transports:
+  - protocol: REST
+    scheme: https
+    documented: false
+    note: A REST gateway host exists at api.arrowheadexchange.com (Cloudflare, 404 on all probed paths) serving the partner-gated Arrowhead EAPI. Nothing about it is publicly documented.
+  - protocol: HTML
+    scheme: https
+    documented: true
+    note: Marketing and investor content only. This is the entirety of Brown & Brown's public web surface.
+  - protocol: EDI/AL3
+    scheme: ivans
+    documented: false
+    note: Indirect — carrier download reaches Brown & Brown through the Vertafore AMS360 agency management system, not through any Brown & Brown-published interface.
+  - protocol: GraphQL
+    documented: false
+  - protocol: WebSocket
+    scheme: wss
+    documented: false
+  - protocol: gRPC
+    documented: false
+marketSeam:
+  market: United States
+  regulator: none (state-by-state under NAIC model laws; McCarran-Ferguson)
+  openInsuranceMandate: false
+  note: |
+    The US has no federal insurance regulator and no open-insurance mandate, so
+    nothing compels a broker or carrier to publish anything. Data exchange has
+    run since the 1970s on ACORD standards in an EDI/forms idiom moved by
+    agency-download plumbing (IVANS) between carriers and agency management
+    systems. Brown & Brown is a textbook confirmation of the consequence: the
+    fifth-largest US independent brokerage, $1.9B in Q1 2026 revenue, and zero
+    public API surface. The integration value sits with the AMS vendors
+    (Vertafore, Applied), the aggregators (CoverHound, Tarmika, Semsee, DAIS)
+    and the risk-data layer — not with the intermediary.
+sources:
+- url: https://us.bbrown.com/
+  type: Website
+  note: US corporate site. Property & casualty, employee benefits, personal insurance, consulting; 21+ industries. No developer, API or integrations navigation.
+- url: https://investor.bbrown.com/
+  type: InvestorRelations
+  note: NYSE BRO, headquartered Daytona Beach, Florida. Confirms the July 2026 completion of the Accession Risk Management Group acquisition.
+- url: https://investor.bbrown.com/news-releases/news-release-details/brown-brown-inc-announces-first-quarter-2026-results-including
+  type: PressRelease
+  note: Q1 2026 total revenues $1.9 billion, up 35.4%. Two reportable segments after the RSC acquisition — Retail and Specialty Distribution.
+- url: https://investor.bbrown.com/news-releases/news-release-details/one80-intermediaries-officially-joins-arrowhead-programs-and
+  type: PressRelease
+  note: Arrowhead Intermediaries brings Bridge Specialty Group, Arrowhead Programs and One80 Intermediaries under one brand.
+- url: https://arrowheadprograms.com/how-our-strategic-api-team-is-broadening-our-market-reach/
+  type: Documentation
+  note: First-party subsidiary account of the strategic API team and the Enterprise API (EAPI) — quote-only, delivered to CoverHound, Tarmika, Semsee and DAIS. No ACORD reference, no developer portal, no spec.
+- url: https://www.arrowheadexchange.com/
+  type: Portal
+  note: Login-gated Angular SPA. The platform the EAPI fronts.
+- url: https://finviz.com/news/57261/vertafore-honors-brown-brown-for-its-enduring-impact-on-the-independent-insurance-channel
+  type: PressRelease
+  note: Vertafore, May 14, 2025 — Brown & Brown built centralized service centers on AMS360 and helped shape the product. No API, IVANS, ACORD or agency-download detail in the release.
+- url: https://www.linkedin.com/company/brown-brown-insurance
+  type: LinkedIn
+  note: Company profile — founded 1939, Daytona Beach, Florida.
+actions:
+  apisYmlUpdated: true
+  apisListed: 0
+  openapiDirectoryCreated: false
+  reason: |
+    apis[] is intentionally empty. Brown & Brown documents no public API, so
+    there is no real docs page to point humanURL at and no base URL to record.
+    The one genuine integration — the Arrowhead Programs EAPI — is partner-only
+    with no published reference, so listing it as an API entry would fabricate a
+    surface that does not exist. It is captured in these findings instead. This
+    is a correct built-stub outcome for a US broker-intermediary in a market with
+    no open-insurance mandate.
