@@ -330,3 +330,59 @@ actions:
     surface that does not exist. It is captured in these findings instead. This
     is a correct built-stub outcome for a US broker-intermediary in a market with
     no open-insurance mandate.
+enrichment:
+- round: '2026-07-25'
+  method: probed
+  outcome: no-change-to-finding
+  artifacts:
+  - security/brown-brown-domain-security.yml
+  - security (vulnerability disclosure / trust center) — probed, no hit, nothing written
+  - well-known/brown-brown-well-known.yml
+  - llms/brown-brown-llms.txt
+  notes:
+  - >-
+    STEP 0b contract discovery repeated against the API host root with a browser
+    user-agent: /openapi.json, /openapi.yaml, /swagger.json, /swagger/index.html,
+    /v1/openapi.json, /v2/openapi.json, /api/openapi.json, /api-docs, /api/docs,
+    /docs, /redoc, /graphql, /mcp, /health and the three anonymous OAuth/OIDC
+    metadata paths on api.arrowheadexchange.com — all HTTP 404. There is no docs
+    host to see through. The "no machine-readable contract" finding stands.
+  - >-
+    github.com/brown-and-brown is now DISPROVED rather than merely unverified.
+    Its three public repos are transWhat (a transgender-identities educational
+    site) and two personal developer homepages (joeyb.dev, lucab.dev), last
+    touched in 2022-2023. It does not belong to Brown & Brown, Inc. and no
+    GitHubOrganization pointer is wired.
+  - >-
+    us.bbrown.com has migrated off WordPress/WP Engine onto HubSpot CMS
+    (x-hs-portal-id 20256628), serving assets from risk-strategies.com hubfs —
+    consistent with the Accession Risk Management Group integration. The
+    WordPress REST API surface noted in the original review is gone; /llms.txt
+    now soft-404s via a HubSpot 301 to the homepage.
+  - >-
+    Two real machine-readable documents were found and wired: the blog RSS 2.0
+    feed at https://us.bbrown.com/blog/rss.xml and the investor news-release RSS
+    feed at https://investor.bbrown.com/rss/news-releases.xml. Content
+    syndication, not an API, but they are the company's only structured output.
+  - >-
+    No first-party packages exist. npm, PyPI (bbrown, brown-brown,
+    arrowhead-exchange) and the GitHub org all miss. No CLI, no components, no
+    sandbox, no changelog, no status page (status.bbrown.com NXDOMAIN), no trust
+    center (trust.bbrown.com NXDOMAIN), no security.txt and no vulnerability
+    disclosure program. Every spec-dependent artifact — openapi, scopes,
+    authentication, conventions, errors, data-model, overlays, mcp, skills,
+    arazzo — is skipped because there is no spec to ground it in.
+  - >-
+    Technology signal, 2026-07-23: Brown & Brown announced an AI-first
+    transformation with Anthropic, McKinsey & Company and Accenture — Claude
+    across 23,000 teammates, Claude Code across the whole software engineering
+    organization, and a value management office for governance and ROI. Recorded
+    as an internal-adoption signal only; it has produced no external API,
+    developer portal or agent-facing surface. Worth re-probing next round.
+  domain_security:
+    hsts: true
+    tls: TLSv1.3
+    dnssec: false
+    caa: none
+    spf: true
+    dmarc: reject

@@ -1,0 +1,113 @@
+generated: '2026-07-25'
+method: searched
+source: live probes of every Brown & Brown and Arrowhead host in apis.yml and review.yml
+note: >-
+  Negative-result record. Brown & Brown serves no /.well-known/ discovery
+  document on any host it controls, and no llms.txt. Every path below was
+  probed live on 2026-07-25 with a browser user-agent and redirects followed.
+  Recorded because absence is the finding for a US broker-intermediary with no
+  public API — not because a document was found. No `WellKnown` pointer is
+  wired into apis.yml, because there is no well-known surface to point at.
+documents: []
+probed:
+- host: https://us.bbrown.com
+  results:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 301
+    note: >-
+      Returns HTTP 301 to https://us.bbrown.com/ and renders the marketing
+      homepage (HubSpot PreRenderedUrlMappingResolver). This is a soft 404, not
+      a published llms.txt.
+  - path: /robots.txt
+    status: 200
+    note: HubSpot default disallows (/_hcms/preview/, /hs/..., /cs/c/). Declares the sitemap. No AI or agent directives.
+  - path: /sitemap.xml
+    status: 200
+    note: 1,144 URLs. No /api, /developer, /docs, /partners or /integrations path anywhere in it.
+- host: https://bbrown.com
+  results:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://www.bbrown.com
+  results:
+  - path: /llms.txt
+    status: 404
+- host: https://api.arrowheadexchange.com
+  note: >-
+    The one live API gateway host in the group (Cloudflare-fronted, partner-gated
+    Arrowhead Programs Enterprise API). Re-probed 2026-07-25 as a STEP 0b contract
+    discovery pass with a browser user-agent — every path still 404, including the
+    anonymous OAuth metadata endpoints that would otherwise be readable.
+  results:
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://www.arrowheadexchange.com
+  results:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /llms.txt
+    status: 404
+dns:
+  note: Re-checked 2026-07-25. No developer, API, status, trust or security hostname exists.
+  nxdomain:
+  - developer.bbrown.com
+  - api.bbrown.com
+  - apis.bbrown.com
+  - docs.bbrown.com
+  - partners.bbrown.com
+  - status.bbrown.com
+  - trust.bbrown.com
+  - security.bbrown.com
+  - trust.arrowheadexchange.com
+  resolves:
+  - host: api.arrowheadexchange.com
+    a: [172.64.152.237, 104.18.35.19]
+    note: Cloudflare. Resolves, serves nothing public.
+contract_discovery:
+  date: '2026-07-25'
+  openapi: none
+  graphql: none
+  mcp: none
+  asyncapi: none
+  grpc: none
+  note: >-
+    Full STEP 0b sweep repeated against the API host root (not just the docs host):
+    /openapi.json, /openapi.yaml, /swagger.json, /swagger/index.html,
+    /v1/openapi.json, /v2/openapi.json, /api/openapi.json, /api-docs, /api/docs,
+    /docs, /redoc, /graphql, /mcp and /health on api.arrowheadexchange.com — all
+    HTTP 404. No JS-rendered docs shell to see through; there is no docs host at
+    all. Confirms the 2026-07-25 review: no machine-readable contract is published.
+feeds:
+  note: >-
+    The only machine-readable documents Brown & Brown publishes anywhere are two
+    RSS 2.0 feeds. They are content syndication, not an API, and are wired into
+    apis.yml as BlogFeeds and PressReleases.
+  found:
+  - url: https://us.bbrown.com/blog/rss.xml
+    status: 200
+    content_type: text/xml
+    kind: RSS 2.0
+    items: 10
+  - url: https://investor.bbrown.com/rss/news-releases.xml
+    status: 200
+    content_type: application/rss+xml
+    kind: RSS 2.0
+    items: 10

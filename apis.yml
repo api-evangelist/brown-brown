@@ -27,7 +27,13 @@ description: >-
   property; carrier data exchange runs, as it does across US retail brokerage,
   through the agency management system layer — Brown & Brown is a publicly
   referenced Vertafore AMS360 agency — and IVANS agency download rather than
-  through any API Brown & Brown itself exposes.
+  through any API Brown & Brown itself exposes. In July 2026 the company
+  announced an AI-first transformation with Anthropic, McKinsey and Accenture,
+  deploying Claude across 23,000 teammates and Claude Code across its software
+  engineering organization; that is internal adoption and has so far produced no
+  external API, developer portal or agent-facing surface. The only
+  machine-readable documents Brown & Brown publishes are two RSS feeds — the
+  blog and investor news releases.
 accessModel:
   pricing: none
   onboarding: partner-gated
@@ -57,14 +63,34 @@ modified: '2026-07-25'
 specificationVersion: '0.19'
 apis: []
 common:
+- type: DomainSecurity
+  url: security/brown-brown-domain-security.yml
 - type: Website
   url: https://www.bbrown.com/
 - type: Website
   url: https://us.bbrown.com/
 - type: Blog
   url: https://us.bbrown.com/blog/
+- type: BlogFeeds
+  url: https://us.bbrown.com/blog/rss.xml
 - type: InvestorRelations
   url: https://investor.bbrown.com/
+- type: PressReleases
+  url: https://investor.bbrown.com/rss/news-releases.xml
+- type: About
+  url: https://us.bbrown.com/about/
+- type: Support
+  url: https://us.bbrown.com/contact-us
+- type: Login
+  url: https://us.bbrown.com/customer-logins
+- type: Careers
+  url: https://us.bbrown.com/careers/
+- type: TermsOfService
+  url: https://us.bbrown.com/general-terms-of-business
+- type: PrivacyPolicy
+  url: https://us.bbrown.com/privacy-policy
+- type: LLMsTxt
+  url: llms/brown-brown-llms.txt
 - type: LinkedIn
   url: https://www.linkedin.com/company/brown-brown-insurance
 maintainers:
