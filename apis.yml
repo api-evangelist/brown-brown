@@ -50,6 +50,17 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.j
 tags:
 - Insurance
 - United States
+- Brokers
+- Property and Casualty
+- Employee Benefits
+- Wholesale Brokerage
+- Managing General Agent
+- Risk Management
+- Agency Management
+- Partner Gated
+tags_raw:
+- Insurance
+- United States
 - Broker
 - Property and Casualty
 - Employee Benefits
