@@ -34,6 +34,17 @@ description: >-
   external API, developer portal or agent-facing surface. The only
   machine-readable documents Brown & Brown publishes are two RSS feeds — the
   blog and investor news releases.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: none
   onboarding: partner-gated
