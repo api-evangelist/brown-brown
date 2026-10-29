@@ -1,4 +1,4 @@
-# Brown & Brown (brown-brown)
+# Brown & Brown
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,93 +64,83 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Brown & Brown, Inc. (NYSE: BRO) is a Daytona Beach, Florida headquartered insurance brokerage and risk-management intermediary founded in 1939, and one of the largest independent brokers in the United States. Following the 2025 acquisition of Accession Risk Management Group (Risk Strategies and One80 Intermediaries), it reports through two segments: Retail — property and casualty insurance, employee benefits, private client, captive solutions and financial/wealth services — and Specialty Distribution — programs, wholesale brokerage and MGA/binding-authority businesses including Arrowhead. As a distributor rather than a carrier, Brown & Brown places risk with insurers instead of underwriting it.
+Brown & Brown, Inc. (NYSE: BRO) is a Daytona Beach, Florida headquartered insurance brokerage and risk-management intermediary founded in 1939, and one of the largest independent brokers in the United States. Following the 2025 acquisition of Accession Risk Management Group (Risk Strategies and One80 Intermediaries), it reports through two segments: Retail — property and casualty insurance, employee benefits, private client, captive solutions and financial/wealth services — and Specialty Distribution — programs, wholesale brokerage and MGA/binding-authority businesses including Arrowhead. As a distributor rather than a carrier, Brown & Brown places risk with insurers instead of underwriting it, and its US home market has no federal insurance regulator and no open-insurance mandate. Its API posture reflects that honestly: Brown & Brown publishes no public developer portal and no self-serve API. developer.bbrown.com, developers.bbrown.com, docs.bbrown.com and api.bbrown.com do not resolve, and every /developers, /api, /partners and /integrations path returns 404. Every discoverable application subdomain is a login wall — agent, client and vendor portals behind Microsoft Entra ID SSO or third-party sign-in. The only real programmatic surface is partner-gated: the Arrowhead Programs "Enterprise API" (EAPI), a quoting integration distributed through comparative raters and aggregators such as CoverHound, Tarmika, Semsee and DAIS, with no public documentation, base URL or specification. No ACORD, AL3, ACORD XML or NGDS reference is published on any Brown & Brown first-party property; carrier data exchange runs, as it does across US retail brokerage, through the agency management system layer — Brown & Brown is a publicly referenced Vertafore AMS360 agency — and IVANS agency download rather than through any API Brown & Brown itself exposes. In July 2026 the company announced an AI-first transformation with Anthropic, McKinsey and Accenture, deploying Claude across 23,000 teammates and Claude Code across its software engineering organization; that is internal adoption and has so far produced no external API, developer portal or agent-facing surface. The only machine-readable documents Brown & Brown publishes are two RSS feeds — the blog and investor news releases.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/brown-brown/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/brown-brown/refs/heads/main/apis.yml)
+**Areas:** Insurance · United States · Brokerage · Property and Casualty · Employee Benefits · Wholesale Brokerage · Managing General Agent · Risk Management · Agency Management
 
-## Tags
+## Brown & Brown on APIs.io
 
-- Insurance
-- United States
-- Broker
-- Property and Casualty
-- Employee Benefits
-- Wholesale Brokerage
-- Managing General Agent
-- Risk Management
-- Agency Management
-- Partner Gated
+Everything profiled for Brown & Brown is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/brown-brown/](https://apis.io/providers/brown-brown/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-07-25
-- **Modified:** 2026-07-25
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Security (1)
 
-**None.** Brown & Brown publishes no public, self-serve API and no developer portal.
+Authentication, trust centre, and vulnerability disclosure.
 
-This is not an omission in the profile — it is the finding. The United States has no federal insurance regulator and no open-insurance mandate, so nothing compels a broker or carrier to publish an interface. Brown & Brown is a clean confirmation of what that produces: the fifth-largest US independent brokerage, $1.9 billion in Q1 2026 revenue, and zero public API surface.
+- [Brown Brown Domain Security](https://apis.io/security/brown-brown/brown-brown-domain-security/)
 
-### What was probed
+## Where to find this API
 
-- `developer.bbrown.com`, `developers.bbrown.com`, `docs.bbrown.com`, `api.bbrown.com`, `apis.bbrown.com`, `portal.bbrown.com` — **none resolve in DNS**.
-- `/developers`, `/developer`, `/api`, `/partners`, `/integrations` on both `bbrown.com` and `us.bbrown.com` — **all 404**.
-- `/.well-known/security.txt`, `/.well-known/openid-configuration`, `/.well-known/oauth-authorization-server` — **all 404**.
-- Roughly 35 `bbrown.com` subdomains enumerated. Every application host is a login wall: `ratings.bbrown.com` redirects to Microsoft Entra ID, `accidentclaims.bbrown.com` is a third-party (ABL Group) claimant login, `cyberapp.bbrown.com` is a Centraleyes GRC tenant, `bbwrite.bbrown.com` and `legalentity.bbrown.com` are Cloudflare-challenged. None carries reference documentation.
-
-### The one real programmatic surface — partner-gated
-
-Arrowhead Programs, part of Brown & Brown's Specialty Distribution segment (now branded within Arrowhead Intermediaries alongside Bridge Specialty Group and One80 Intermediaries), operates an **Enterprise API (EAPI)** layered over the Arrowhead Exchange agent platform. It is a **quote** integration, delivered by commercial agreement to comparative raters and aggregators — CoverHound, Tarmika, Semsee, DAIS. It is not consumer-facing, not self-serve, and has no public documentation, base URL or specification.
-
-`api.arrowheadexchange.com` resolves behind Cloudflare but returns **404 for the root and for every probed spec path** (`/openapi.json`, `/openapi.yaml`, `/swagger.json`, `/swagger/v1/swagger.json`, `/v1/openapi.json`, `/api-docs`, `/docs`, `/spec`, `/redoc`, `/swagger`, `/.well-known/openid-configuration`). A gateway exists; nothing public is served from it.
-
-### ACORD posture
-
-**No ACORD reference published; exchange runs via Vertafore AMS360 / IVANS agency download.**
-
-No mention of ACORD, AL3, ACORD XML, ACORD certification or NGDS appears on any Brown & Brown first-party property, or in the Arrowhead API material. The company's actual carrier data exchange runs where it runs for essentially all US retail brokerage — through the agency management system layer. Brown & Brown is a publicly referenced Vertafore AMS360 agency (Vertafore, May 2025), and AMS360-class systems carry carrier policy download over IVANS in ACORD AL3 / ACORD XML. That plumbing belongs to the AMS vendor and the carriers, not to an interface Brown & Brown publishes.
-
-### Quote / bind / issue / FNOL
-
-| Verb | Exposed | Audience |
-| --- | --- | --- |
-| Quote | Yes | Partner-only (Arrowhead EAPI via aggregators) |
-| Bind | No | — |
-| Issue | No | — |
-| FNOL | No | Gated portals and the carriers on whose paper the risk sits |
-
-### Auth, webhooks, SDKs
-
-No public API means no published authentication scheme. Observed portal auth is OIDC/SAML federation to Microsoft Entra ID plus separate third-party vendor logins. No webhook catalog, no AsyncAPI, no GraphQL endpoint, no published `.proto`, no public Postman workspace, no first-party SDKs.
-
-### Technology signal
-
-On **July 23, 2026** Brown & Brown announced an AI-first transformation with **Anthropic, McKinsey & Company and Accenture** — deploying Claude across 23,000 teammates and Claude Code across the entire software engineering organization, with a value management office for governance and ROI. This is internal adoption. As of this record it has produced no external API, developer portal or agent-facing surface, which makes Brown & Brown a company worth re-probing.
-
-## Artifacts
-
-Everything spec-dependent is absent because there is no spec. What is here is probe evidence:
-
-- [`well-known/brown-brown-well-known.yml`](well-known/brown-brown-well-known.yml) — discovery-surface record. No `/.well-known/` document of any kind, no `llms.txt` (the `/llms.txt` 200 is a HubSpot 301 to the homepage), plus the full re-run of contract discovery against `api.arrowheadexchange.com`.
-- [`security/brown-brown-domain-security.yml`](security/brown-brown-domain-security.yml) — TLS 1.3 and HSTS on both web hosts, SPF and DMARC at `p=reject`, no DNSSEC and no CAA.
-- [`llms/brown-brown-llms.txt`](llms/brown-brown-llms.txt) — generated by API Evangelist (not published by Brown & Brown) so an agent reading this repo gets the honest posture rather than guessing.
-
-No packages, CLI, components, sandbox, changelog, status page, trust center, security.txt or vulnerability-disclosure program was found. `github.com/brown-and-brown` is **disproved**, not merely unverified — its three repos are an unrelated educational site and two personal developer homepages.
-
-## Links
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.bbrown.com/)
-- [US Website](https://us.bbrown.com/)
-- [Blog](https://us.bbrown.com/blog/) · [Blog RSS](https://us.bbrown.com/blog/rss.xml)
-- [Investor Relations](https://investor.bbrown.com/) · [News Release RSS](https://investor.bbrown.com/rss/news-releases.xml)
-- [About](https://us.bbrown.com/about/)
-- [Contact](https://us.bbrown.com/contact-us)
-- [Customer Logins](https://us.bbrown.com/customer-logins)
-- [Careers](https://us.bbrown.com/careers/)
-- [General Terms of Business](https://us.bbrown.com/general-terms-of-business) · [Privacy Policy](https://us.bbrown.com/privacy-policy)
-- [LinkedIn](https://www.linkedin.com/company/brown-brown-insurance)
+- [Support](https://us.bbrown.com/contact-us)
+- [Blog](https://us.bbrown.com/blog/)
+- [Terms of service](https://us.bbrown.com/general-terms-of-business)
+- [Privacy policy](https://us.bbrown.com/privacy-policy)
 
-## Review
+## API Evangelist rating
 
-See [review.yml](review.yml) for the full reviewer finding, every probed URL with its HTTP status, the ACORD posture record, and the dated `enrichment:` rounds.
+**Kin Score 11.2** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 49.1 |
+| Contract quality | 0.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 7.1 |
+| Access clarity | 27.6 |
+
+**Agent readiness 0.0** — human-only
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 12.3** — Insurance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/brown-brown/](https://apis.io/providers/brown-brown/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Brown & Brown: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/brown-brown/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
